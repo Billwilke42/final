@@ -8,11 +8,19 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      urls: []
+      urls: [],
+      isLoading: false
     }
   }
 
   componentDidMount() {
+    this.setState({isLoading: true})
+    getUrls()
+    .then(data=> this.setState({
+      urls: data.urls,
+      isLoading: false
+    }))
+    
   }
 
   render() {
