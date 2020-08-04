@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls, submitUrl } from '../../apiCalls';
+import { getUrls, submitUrl, deleteUrl } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -22,8 +22,13 @@ export class App extends Component {
     }))
   }
 
+  handleDelete = async (id) => {
+    await deleteUrl(id)
+      .then(() => this.getAllUrls)
+  }
+
   handleSubmit = (e, url, title) => {
-    // e.preventDefault();
+    e.preventDefault()
     submitUrl(url, title)
     this.getAllUrls()
   }
@@ -31,11 +36,6 @@ export class App extends Component {
   componentDidMount() {
     this.setState({isLoading: true})
     this.getAllUrls()
-    // .then(data=> this.setState({
-    //   urls: data.urls,
-    //   isLoading: false
-    // }))
-    
   }
 
   render() {
@@ -47,7 +47,7 @@ export class App extends Component {
           <UrlForm handleSubmit={this.handleSubmit} />
         </header>
 
-        <UrlContainer urls={this.state.urls}/>
+        <UrlContainer urls={this.state.urls} deleteUrl={this.handleDelete}/>
       </main>
     );
   }
