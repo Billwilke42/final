@@ -22,15 +22,14 @@ export class App extends Component {
     }))
   }
 
-  handleDelete = async (id) => {
-
+  handleDelete = async ( id) => {
     await deleteUrl(id)
-      .then(() => this.getAllUrls)
+    this.getAllUrls()
   }
 
-  handleSubmit = (e, url, title) => {
+  handleSubmit = async (e, url, title) => {
     e.preventDefault()
-    submitUrl(url, title)
+    await submitUrl(url, title)
     this.getAllUrls()
   }
 

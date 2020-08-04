@@ -36,7 +36,7 @@ describe('UrlForm', () => {
 
   it('Should call the right method on submit', () => {
     const mockGetAllUrls = jest.fn()
-    const { getByRole, getByPlaceholderText } = render(<UrlForm getAllUrls={mockGetAllUrls}/>)
+    const { getByRole, getByPlaceholderText } = render(<UrlForm handleSubmit={mockGetAllUrls}/>)
   
     const titleInput = getByPlaceholderText('Title...') 
     const urlInput = getByPlaceholderText('URL to Shorten...')
