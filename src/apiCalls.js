@@ -1,6 +1,7 @@
 export const getUrls = () => {
   return fetch('http://localhost:3001/api/v1/urls')
       .then(response => response.json())
+      // .then(response => console.log(response))
 }
 
 export const submitUrl = async (longUrl, newTitle) => {
@@ -18,6 +19,7 @@ export const submitUrl = async (longUrl, newTitle) => {
     throw new Error(`HTTP errior! status ${response.status}`)
   } else {
     const data = await response.json()
+    console.log(data)
     return data
   }
 }
