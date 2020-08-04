@@ -23,6 +23,7 @@ export class App extends Component {
   }
 
   handleDelete = async (id) => {
+
     await deleteUrl(id)
       .then(() => this.getAllUrls)
   }
