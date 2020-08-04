@@ -27,9 +27,9 @@ export class App extends Component {
     this.getAllUrls()
   }
 
-  handleSubmit = (e, url, title) => {
+  handleSubmit = async (e, url, title) => {
     e.preventDefault()
-    submitUrl(url, title)
+    await submitUrl(url, title)
     this.getAllUrls()
   }
 
