@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { getUrls, submitUrl, deleteUrl } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -8,22 +8,48 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      urls: []
+      urls: [],
+      isLoading: false
     }
   }
 
+  getAllUrls = () => {
+    this.setState({isLoading: true})
+    getUrls()
+    .then(data=> this.setState({
+      urls: data.urls,
+      isLoading: false
+    }))
+  }
+
+  handleDelete = async (id) => {
+
+    await deleteUrl(id)
+      .then(() => this.getAllUrls)
+  }
+
+  handleSubmit = (e, url, title) => {
+    e.preventDefault()
+    submitUrl(url, title)
+    this.getAllUrls()
+  }
+
+
   componentDidMount() {
+    this.setState({isLoading: true})
+    this.getAllUrls()
   }
 
   render() {
+    const { urls, isLoading } = this.state
     return (
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm handleSubmit={this.handleSubmit} />
         </header>
 
-        <UrlContainer urls={this.state.urls}/>
+        <UrlContainer urls={this.state.urls} deleteUrl={this.handleDelete}/>
       </main>
     );
   }
