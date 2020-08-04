@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { getUrls, submitUrl } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -22,13 +22,19 @@ export class App extends Component {
     }))
   }
 
+  handleSubmit = (e, url, title) => {
+    // e.preventDefault();
+    submitUrl(url, title)
+    this.getAllUrls()
+  }
+
   componentDidMount() {
     this.setState({isLoading: true})
-    getUrls()
-    .then(data=> this.setState({
-      urls: data.urls,
-      isLoading: false
-    }))
+    this.getAllUrls()
+    // .then(data=> this.setState({
+    //   urls: data.urls,
+    //   isLoading: false
+    // }))
     
   }
 
@@ -38,7 +44,7 @@ export class App extends Component {
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm getAllUrls={this.getAllUrls} />
+          <UrlForm handleSubmit={this.handleSubmit} />
         </header>
 
         <UrlContainer urls={this.state.urls}/>

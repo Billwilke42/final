@@ -23,3 +23,7 @@ export const submitUrl = async (longUrl, newTitle) => {
     return data
   }
 }
+
+export const deleteUrl = async (id) => {
+  // await fetch(`http://localhost:3001/api/v1/urls/${}`)
+}
