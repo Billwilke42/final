@@ -13,6 +13,15 @@ export class App extends Component {
     }
   }
 
+  getAllUrls = () => {
+    this.setState({isLoading: true})
+    getUrls()
+    .then(data=> this.setState({
+      urls: data.urls,
+      isLoading: false
+    }))
+  }
+
   componentDidMount() {
     this.setState({isLoading: true})
     getUrls()
@@ -24,11 +33,12 @@ export class App extends Component {
   }
 
   render() {
+    const { urls, isLoading } = this.state
     return (
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm getAllUrls={this.getAllUrls} />
         </header>
 
         <UrlContainer urls={this.state.urls}/>
