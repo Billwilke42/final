@@ -14,10 +14,13 @@ class UrlForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  handleSubmit = (e, url, title) => {
+    this.props.handleSubmit(e, url, title)
+    this.clearInputs()
+  }
   clearInputs = () => {
     this.setState({title: '', urlToShorten: ''});
   }
-
   render() {
     return (
       <form>
@@ -37,7 +40,7 @@ class UrlForm extends Component {
           onChange={e => this.handleNameChange(e)}
         />
 
-        <button onClick={e => this.props.handleSubmit(e, this.state.urlToShorten, this.state.title)}>
+        <button onClick={e => this.handleSubmit(e, this.state.urlToShorten, this.state.title)}>
           Shorten Please!
         </button>
       </form>
